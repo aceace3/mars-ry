@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mars.sentencescollection.mapper.SentencesCollectionMapper">
+    
+    <resultMap type="SentencesCollection" id="SentencesCollectionResult">
+        <result property="collectionId"    column="collection_id"    />
+        <result property="sentencesId"    column="sentences_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectSentencesCollectionVo">
+        select collection_id, sentences_id, user_id, create_by, create_time, update_by, update_time, remark, del_flag from mars_sentences_collection
+    </sql>
+
+    <select id="selectSentencesCollectionList" parameterType="SentencesCollection" resultMap="SentencesCollectionResult">
+        <include refid="selectSentencesCollectionVo"/>
+        <where>  
+            <if test="sentencesId != null "> and sentences_id = #{sentencesId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="delFlag != null  and delFlag != ''"> and del_flag = #{delFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectSentencesCollectionByCollectionId" parameterType="Long" resultMap="SentencesCollectionResult">
+        <include refid="selectSentencesCollectionVo"/>
+        where collection_id = #{collectionId}
+    </select>
+        
+    <insert id="insertSentencesCollection" parameterType="SentencesCollection" useGeneratedKeys="true" keyProperty="collectionId">
+        insert into mars_sentences_collection
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sentencesId != null">sentences_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="delFlag != null">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sentencesId != null">#{sentencesId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSentencesCollection" parameterType="SentencesCollection">
+        update mars_sentences_collection
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sentencesId != null">sentences_id = #{sentencesId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where collection_id = #{collectionId}
+    </update>
+
+    <delete id="deleteSentencesCollectionByCollectionId" parameterType="Long">
+        delete from mars_sentences_collection where collection_id = #{collectionId}
+    </delete>
+
+    <delete id="deleteSentencesCollectionByCollectionIds" parameterType="String">
+        delete from mars_sentences_collection where collection_id in 
+        <foreach item="collectionId" collection="array" open="(" separator="," close=")">
+            #{collectionId}
+        </foreach>
+    </delete>
+</mapper>

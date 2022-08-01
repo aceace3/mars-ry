@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mars.sentences.mapper.SentencesMapper">
+    
+    <resultMap type="Sentences" id="SentencesResult">
+        <result property="sentencesId"    column="sentences_id"    />
+        <result property="contentText"    column="content_text"    />
+        <result property="contentHtml"    column="content_html"    />
+        <result property="source"    column="source"    />
+        <result property="isTop"    column="is_top"    />
+        <result property="userId"    column="user_id"    />
+        <result property="author"    column="author"    />
+        <result property="authorEmail"    column="author_email"    />
+        <result property="authorTalk"    column="author_talk"    />
+        <result property="type"    column="type"    />
+        <result property="permitShowEmail"    column="permit_show_email"    />
+        <result property="sort"    column="sort"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectSentencesVo">
+        select sentences_id, content_text, content_html, source, is_top, user_id, author, author_email, author_talk, type, permit_show_email, sort, create_by, create_time, update_by, update_time, remark, del_flag from mars_sentences
+    </sql>
+
+    <select id="selectSentencesList" parameterType="Sentences" resultMap="SentencesResult">
+        <include refid="selectSentencesVo"/>
+        <where>  
+            <if test="contentText != null  and contentText != ''"> and content_text like concat('%', #{contentText}, '%')</if>
+            <if test="contentHtml != null  and contentHtml != ''"> and content_html like concat('%', #{contentHtml}, '%')</if>
+            <if test="source != null  and source != ''"> and source like concat('%', #{source}, '%')</if>
+            <if test="isTop != null  and isTop != ''"> and is_top = #{isTop}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="author != null  and author != ''"> and author like concat('%', #{author}, '%')</if>
+            <if test="authorEmail != null  and authorEmail != ''"> and author_email like concat('%', #{authorEmail}, '%')</if>
+            <if test="authorTalk != null  and authorTalk != ''"> and author_talk like concat('%', #{authorTalk}, '%')</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="permitShowEmail != null  and permitShowEmail != ''"> and permit_show_email = #{permitShowEmail}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+            <if test="delFlag != null  and delFlag != ''"> and del_flag = #{delFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectSentencesBySentencesId" parameterType="Long" resultMap="SentencesResult">
+        <include refid="selectSentencesVo"/>
+        where sentences_id = #{sentencesId}
+    </select>
+        
+    <insert id="insertSentences" parameterType="Sentences" useGeneratedKeys="true" keyProperty="sentencesId">
+        insert into mars_sentences
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="contentText != null and contentText != ''">content_text,</if>
+            <if test="contentHtml != null and contentHtml != ''">content_html,</if>
+            <if test="source != null">source,</if>
+            <if test="isTop != null">is_top,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="author != null and author != ''">author,</if>
+            <if test="authorEmail != null">author_email,</if>
+            <if test="authorTalk != null">author_talk,</if>
+            <if test="type != null">type,</if>
+            <if test="permitShowEmail != null">permit_show_email,</if>
+            <if test="sort != null">sort,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="delFlag != null">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="contentText != null and contentText != ''">#{contentText},</if>
+            <if test="contentHtml != null and contentHtml != ''">#{contentHtml},</if>
+            <if test="source != null">#{source},</if>
+            <if test="isTop != null">#{isTop},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="author != null and author != ''">#{author},</if>
+            <if test="authorEmail != null">#{authorEmail},</if>
+            <if test="authorTalk != null">#{authorTalk},</if>
+            <if test="type != null">#{type},</if>
+            <if test="permitShowEmail != null">#{permitShowEmail},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSentences" parameterType="Sentences">
+        update mars_sentences
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="contentText != null and contentText != ''">content_text = #{contentText},</if>
+            <if test="contentHtml != null and contentHtml != ''">content_html = #{contentHtml},</if>
+            <if test="source != null">source = #{source},</if>
+            <if test="isTop != null">is_top = #{isTop},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="author != null and author != ''">author = #{author},</if>
+            <if test="authorEmail != null">author_email = #{authorEmail},</if>
+            <if test="authorTalk != null">author_talk = #{authorTalk},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="permitShowEmail != null">permit_show_email = #{permitShowEmail},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where sentences_id = #{sentencesId}
+    </update>
+
+    <delete id="deleteSentencesBySentencesId" parameterType="Long">
+        delete from mars_sentences where sentences_id = #{sentencesId}
+    </delete>
+
+    <delete id="deleteSentencesBySentencesIds" parameterType="String">
+        delete from mars_sentences where sentences_id in 
+        <foreach item="sentencesId" collection="array" open="(" separator="," close=")">
+            #{sentencesId}
+        </foreach>
+    </delete>
+</mapper>

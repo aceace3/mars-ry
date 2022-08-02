@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mars.billboard.mapper.BillboardMapper">
+    
+    <resultMap type="Billboard" id="BillboardResult">
+        <result property="billboardId"    column="billboard_id"    />
+        <result property="billboardTitle"    column="billboard_title"    />
+        <result property="billboardContent"    column="billboard_content"    />
+        <result property="isTop"    column="is_top"    />
+        <result property="sort"    column="sort"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectBillboardVo">
+        select billboard_id, billboard_title, billboard_content, is_top, sort, create_by, create_time, update_by, update_time, remark, del_flag from mars_billboard
+    </sql>
+
+    <select id="selectBillboardList" parameterType="Billboard" resultMap="BillboardResult">
+        <include refid="selectBillboardVo"/>
+        <where>  
+            <if test="billboardTitle != null  and billboardTitle != ''"> and billboard_title = #{billboardTitle}</if>
+            <if test="billboardContent != null  and billboardContent != ''"> and billboard_content = #{billboardContent}</if>
+            <if test="isTop != null  and isTop != ''"> and is_top = #{isTop}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+        </where>
+    </select>
+    
+    <select id="selectBillboardByBillboardId" parameterType="Long" resultMap="BillboardResult">
+        <include refid="selectBillboardVo"/>
+        where billboard_id = #{billboardId}
+    </select>
+        
+    <insert id="insertBillboard" parameterType="Billboard" useGeneratedKeys="true" keyProperty="billboardId">
+        insert into mars_billboard
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="billboardTitle != null">billboard_title,</if>
+            <if test="billboardContent != null">billboard_content,</if>
+            <if test="isTop != null">is_top,</if>
+            <if test="sort != null">sort,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="delFlag != null">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="billboardTitle != null">#{billboardTitle},</if>
+            <if test="billboardContent != null">#{billboardContent},</if>
+            <if test="isTop != null">#{isTop},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBillboard" parameterType="Billboard">
+        update mars_billboard
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="billboardTitle != null">billboard_title = #{billboardTitle},</if>
+            <if test="billboardContent != null">billboard_content = #{billboardContent},</if>
+            <if test="isTop != null">is_top = #{isTop},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where billboard_id = #{billboardId}
+    </update>
+
+    <delete id="deleteBillboardByBillboardId" parameterType="Long">
+        delete from mars_billboard where billboard_id = #{billboardId}
+    </delete>
+
+    <delete id="deleteBillboardByBillboardIds" parameterType="String">
+        delete from mars_billboard where billboard_id in 
+        <foreach item="billboardId" collection="array" open="(" separator="," close=")">
+            #{billboardId}
+        </foreach>
+    </delete>
+</mapper>

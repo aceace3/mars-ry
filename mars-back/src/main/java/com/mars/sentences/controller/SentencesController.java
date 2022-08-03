@@ -56,7 +56,7 @@ public class SentencesController extends BaseController
     {
         List<Sentences> list = sentencesService.selectSentencesList(sentences);
         ExcelUtil<Sentences> util = new ExcelUtil<Sentences>(Sentences.class);
-        util.exportExcel(response, list, "句子数据。");
+        util.exportExcel(response, list, "句子数据");
     }
 
     /**

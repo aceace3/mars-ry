@@ -1,7 +1,7 @@
 {
-  "name": "ruoyi",
+  "name": "mars-front-manager",
   "version": "3.8.3",
-  "description": "若依管理系统",
+  "description": "mars-front-manager",
   "author": "若依",
   "license": "MIT",
   "scripts": {

@@ -114,8 +114,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .antMatchers(HttpMethod.GET, "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**").permitAll()
                 .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**").permitAll()
 
-                // 使用 permitAll() 方法所有人都能访问，包括带上 token 访问
+                // 无需登录
                 .antMatchers("/admins/**").permitAll()
+                .antMatchers("/mars/**").permitAll()
+                .antMatchers("/mars/sentences/randomQueryOne").permitAll()
+
 
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated()

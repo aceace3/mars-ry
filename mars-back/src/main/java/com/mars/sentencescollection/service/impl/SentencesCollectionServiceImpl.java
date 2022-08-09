@@ -10,19 +10,19 @@ import com.mars.sentencescollection.service.ISentencesCollectionService;
 
 /**
  * 句子收藏管理Service业务层处理
- * 
+ *
  * @author zy
  * @date 2022-08-01
  */
 @Service
-public class SentencesCollectionServiceImpl implements ISentencesCollectionService 
+public class SentencesCollectionServiceImpl implements ISentencesCollectionService
 {
     @Autowired
     private SentencesCollectionMapper sentencesCollectionMapper;
 
     /**
      * 查询句子收藏管理
-     * 
+     *
      * @param collectionId 句子收藏管理主键
      * @return 句子收藏管理
      */
@@ -34,7 +34,7 @@ public class SentencesCollectionServiceImpl implements ISentencesCollectionServi
 
     /**
      * 查询句子收藏管理列表
-     * 
+     *
      * @param sentencesCollection 句子收藏管理
      * @return 句子收藏管理
      */
@@ -46,7 +46,7 @@ public class SentencesCollectionServiceImpl implements ISentencesCollectionServi
 
     /**
      * 新增句子收藏管理
-     * 
+     *
      * @param sentencesCollection 句子收藏管理
      * @return 结果
      */
@@ -59,7 +59,7 @@ public class SentencesCollectionServiceImpl implements ISentencesCollectionServi
 
     /**
      * 修改句子收藏管理
-     * 
+     *
      * @param sentencesCollection 句子收藏管理
      * @return 结果
      */
@@ -72,7 +72,7 @@ public class SentencesCollectionServiceImpl implements ISentencesCollectionServi
 
     /**
      * 批量删除句子收藏管理
-     * 
+     *
      * @param collectionIds 需要删除的句子收藏管理主键
      * @return 结果
      */
@@ -84,7 +84,7 @@ public class SentencesCollectionServiceImpl implements ISentencesCollectionServi
 
     /**
      * 删除句子收藏管理信息
-     * 
+     *
      * @param collectionId 句子收藏管理主键
      * @return 结果
      */
@@ -92,5 +92,29 @@ public class SentencesCollectionServiceImpl implements ISentencesCollectionServi
     public int deleteSentencesCollectionByCollectionId(Long collectionId)
     {
         return sentencesCollectionMapper.deleteSentencesCollectionByCollectionId(collectionId);
+    }
+
+    /**
+     * 逻辑批量删除句子收藏管理
+     *
+     * @param collectionIds 需要删除的句子收藏管理主键
+     * @return 结果
+     */
+    @Override
+    public int logicDeleteSentencesCollectionByCollectionIds(Long[] collectionIds)
+    {
+        return sentencesCollectionMapper.logicDeleteSentencesCollectionByCollectionIds(collectionIds);
+    }
+
+    /**
+     * 逻辑删除句子收藏管理信息
+     *
+     * @param collectionId 句子收藏管理主键
+     * @return 结果
+     */
+    @Override
+    public int logicDeleteSentencesCollectionByCollectionId(Long collectionId)
+    {
+        return sentencesCollectionMapper.logicDeleteSentencesCollectionByCollectionId(collectionId);
     }
 }

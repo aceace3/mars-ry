@@ -23,7 +23,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 公告管理Controller
- * 
+ *
  * @author zy
  * @date 2022-08-02
  */
@@ -99,6 +99,6 @@ public class BillboardController extends BaseController
 	@DeleteMapping("/{billboardIds}")
     public AjaxResult remove(@PathVariable Long[] billboardIds)
     {
-        return toAjax(billboardService.deleteBillboardByBillboardIds(billboardIds));
+        return toAjax(billboardService.logicDeleteBillboardByBillboardIds(billboardIds));
     }
 }

@@ -58,4 +58,20 @@ public interface SentencesCollectionMapper
      * @return 结果
      */
     public int deleteSentencesCollectionByCollectionIds(Long[] collectionIds);
+
+    /**
+     * 逻辑删除句子收藏管理
+     *
+     * @param collectionId 句子收藏管理主键
+     * @return 结果
+     */
+    public int logicDeleteSentencesCollectionByCollectionId(Long collectionId);
+
+    /**
+     * 逻辑批量删除句子收藏管理
+     *
+     * @param collectionIds 需要删除的数据主键集合
+     * @return 结果
+     */
+    public int logicDeleteSentencesCollectionByCollectionIds(Long[] collectionIds);
 }

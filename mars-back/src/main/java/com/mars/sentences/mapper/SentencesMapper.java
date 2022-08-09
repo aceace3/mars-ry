@@ -58,4 +58,25 @@ public interface SentencesMapper
      * @return 结果
      */
     public int deleteSentencesBySentencesIds(Long[] sentencesIds);
+
+    /**
+     * 逻辑删除句子
+     *
+     * @param sentencesId 句子主键
+     * @return 结果
+     */
+    public int logicDeleteSentencesBySentencesId(Long sentencesId);
+
+    /**
+     * 逻辑批量删除句子
+     *
+     * @param sentencesIds 需要删除的数据主键集合
+     * @return 结果
+     */
+    public int logicDeleteSentencesBySentencesIds(Long[] sentencesIds);
+
+    /**
+     * 随机获取一句
+     * */
+    public Sentences randomQueryOne();
 }

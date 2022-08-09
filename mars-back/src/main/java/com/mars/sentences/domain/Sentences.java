@@ -7,7 +7,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * 句子对象 mars_sentences
- * 
+ *
  * @author zy
  * @date 2022-08-01
  */
@@ -52,7 +52,7 @@ public class Sentences extends BaseEntity
 
     /** 1-已发布/2-审核中 */
     @Excel(name = "1-已发布/2-审核中")
-    private Long type;
+    private Integer type;
 
     /** 允许展示email */
     @Excel(name = "允许展示email")
@@ -60,125 +60,136 @@ public class Sentences extends BaseEntity
 
     /** 排序 */
     @Excel(name = "排序")
-    private Long sort;
+    private Integer sort;
 
     /** 删除标记 */
     private String delFlag;
 
-    public void setSentencesId(Long sentencesId) 
+    /** 搜索关键字 */
+    private String searchWord;
+
+    public String getSearchWord() {
+        return searchWord;
+    }
+
+    public void setSearchWord(String searchWord) {
+        this.searchWord = searchWord;
+    }
+
+    public void setSentencesId(Long sentencesId)
     {
         this.sentencesId = sentencesId;
     }
 
-    public Long getSentencesId() 
+    public Long getSentencesId()
     {
         return sentencesId;
     }
-    public void setContentText(String contentText) 
+    public void setContentText(String contentText)
     {
         this.contentText = contentText;
     }
 
-    public String getContentText() 
+    public String getContentText()
     {
         return contentText;
     }
-    public void setContentHtml(String contentHtml) 
+    public void setContentHtml(String contentHtml)
     {
         this.contentHtml = contentHtml;
     }
 
-    public String getContentHtml() 
+    public String getContentHtml()
     {
         return contentHtml;
     }
-    public void setSource(String source) 
+    public void setSource(String source)
     {
         this.source = source;
     }
 
-    public String getSource() 
+    public String getSource()
     {
         return source;
     }
-    public void setIsTop(String isTop) 
+    public void setIsTop(String isTop)
     {
         this.isTop = isTop;
     }
 
-    public String getIsTop() 
+    public String getIsTop()
     {
         return isTop;
     }
-    public void setUserId(Long userId) 
+    public void setUserId(Long userId)
     {
         this.userId = userId;
     }
 
-    public Long getUserId() 
+    public Long getUserId()
     {
         return userId;
     }
-    public void setAuthor(String author) 
+    public void setAuthor(String author)
     {
         this.author = author;
     }
 
-    public String getAuthor() 
+    public String getAuthor()
     {
         return author;
     }
-    public void setAuthorEmail(String authorEmail) 
+    public void setAuthorEmail(String authorEmail)
     {
         this.authorEmail = authorEmail;
     }
 
-    public String getAuthorEmail() 
+    public String getAuthorEmail()
     {
         return authorEmail;
     }
-    public void setAuthorTalk(String authorTalk) 
+    public void setAuthorTalk(String authorTalk)
     {
         this.authorTalk = authorTalk;
     }
 
-    public String getAuthorTalk() 
+    public String getAuthorTalk()
     {
         return authorTalk;
     }
-    public void setType(Long type) 
+    public void setType(Integer type)
     {
         this.type = type;
     }
 
-    public Long getType() 
+    public Integer getType()
     {
         return type;
     }
-    public void setPermitShowEmail(String permitShowEmail) 
+    public void setPermitShowEmail(String permitShowEmail)
     {
         this.permitShowEmail = permitShowEmail;
     }
 
-    public String getPermitShowEmail() 
+    public String getPermitShowEmail()
     {
         return permitShowEmail;
     }
-    public void setSort(Long sort) 
+    public void setSort(Integer sort)
     {
         this.sort = sort;
     }
 
-    public Long getSort() 
+    public Integer getSort()
     {
         return sort;
     }
-    public void setDelFlag(String delFlag) 
+    public void setDelFlag(String delFlag)
     {
         this.delFlag = delFlag;
     }
 
-    public String getDelFlag() 
+    public String getDelFlag()
     {
         return delFlag;
     }

@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mars.sentences.mapper.SentencesMapper">
-    
+
     <resultMap type="Sentences" id="SentencesResult">
         <result property="sentencesId"    column="sentences_id"    />
         <result property="contentText"    column="content_text"    />
@@ -31,7 +31,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectSentencesList" parameterType="Sentences" resultMap="SentencesResult">
         <include refid="selectSentencesVo"/>
-        <where>  
+        <where>
+            del_flag = 'N'
+            <if test="searchWord != null  and searchWord != ''">
+             and (content_text like concat('%', #{searchWord}, '%'))
+                or (source like concat('%', #{searchWord}, '%'))
+                or (author like concat('%', #{searchWord}, '%'))
+                or (author_email like concat('%', #{searchWord}, '%'))
+             </if>
             <if test="contentText != null  and contentText != ''"> and content_text like concat('%', #{contentText}, '%')</if>
             <if test="contentHtml != null  and contentHtml != ''"> and content_html like concat('%', #{contentHtml}, '%')</if>
             <if test="source != null  and source != ''"> and source like concat('%', #{source}, '%')</if>
@@ -46,12 +53,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="delFlag != null  and delFlag != ''"> and del_flag = #{delFlag}</if>
         </where>
     </select>
-    
+
     <select id="selectSentencesBySentencesId" parameterType="Long" resultMap="SentencesResult">
         <include refid="selectSentencesVo"/>
         where sentences_id = #{sentencesId}
     </select>
-        
+
     <insert id="insertSentences" parameterType="Sentences" useGeneratedKeys="true" keyProperty="sentencesId">
         insert into mars_sentences
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -123,9 +130,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteSentencesBySentencesIds" parameterType="String">
-        delete from mars_sentences where sentences_id in 
+        delete from mars_sentences where sentences_id in
         <foreach item="sentencesId" collection="array" open="(" separator="," close=")">
             #{sentencesId}
         </foreach>
     </delete>
+
+    <update id="logicDeleteSentencesBySentencesId" parameterType="Long">
+        update mars_sentences set del_flag = 'Y' where sentences_id = #{sentencesId}
+    </update>
+
+    <update id="logicDeleteSentencesBySentencesIds" parameterType="String">
+        update mars_sentences set del_flag = 'Y' where sentences_id in
+        <foreach item="sentencesId" collection="array" open="(" separator="," close=")">
+            #{sentencesId}
+        </foreach>
+    </update>
+
+    <select id="randomQueryOne" resultMap="SentencesResult">
+        select t1.sentences_id, t1.content_text, t1.content_html, t1.source, t1.is_top, t1.user_id, t1.author, t1.author_email, t1.author_talk, t1.type, t1.permit_show_email, t1.sort, t1.create_by, t1.create_time, t1.update_by, t1.update_time, t1.remark, t1.del_flag from mars_sentences AS t1
+        JOIN (SELECT ROUND(RAND() * (SELECT MAX(sentences_id) FROM mars_sentences)) AS sentences_id) AS t2
+        WHERE t1.sentences_id >= t2.sentences_id
+        ORDER BY t1.sentences_id ASC LIMIT 1;
+    </select>
 </mapper>

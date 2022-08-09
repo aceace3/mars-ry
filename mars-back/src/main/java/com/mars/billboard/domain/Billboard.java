@@ -7,7 +7,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * 公告管理对象 mars_billboard
- * 
+ *
  * @author zy
  * @date 2022-08-02
  */
@@ -32,62 +32,62 @@ public class Billboard extends BaseEntity
 
     /** 排序 */
     @Excel(name = "排序")
-    private Long sort;
+    private Integer sort;
 
     /** 删除标记 */
     private String delFlag;
 
-    public void setBillboardId(Long billboardId) 
+    public void setBillboardId(Long billboardId)
     {
         this.billboardId = billboardId;
     }
 
-    public Long getBillboardId() 
+    public Long getBillboardId()
     {
         return billboardId;
     }
-    public void setBillboardTitle(String billboardTitle) 
+    public void setBillboardTitle(String billboardTitle)
     {
         this.billboardTitle = billboardTitle;
     }
 
-    public String getBillboardTitle() 
+    public String getBillboardTitle()
     {
         return billboardTitle;
     }
-    public void setBillboardContent(String billboardContent) 
+    public void setBillboardContent(String billboardContent)
     {
         this.billboardContent = billboardContent;
     }
 
-    public String getBillboardContent() 
+    public String getBillboardContent()
     {
         return billboardContent;
     }
-    public void setIsTop(String isTop) 
+    public void setIsTop(String isTop)
     {
         this.isTop = isTop;
     }
 
-    public String getIsTop() 
+    public String getIsTop()
     {
         return isTop;
     }
-    public void setSort(Long sort) 
+    public void setSort(Integer sort)
     {
         this.sort = sort;
     }
 
-    public Long getSort() 
+    public Integer getSort()
     {
         return sort;
     }
-    public void setDelFlag(String delFlag) 
+    public void setDelFlag(String delFlag)
     {
         this.delFlag = delFlag;
     }
 
-    public String getDelFlag() 
+    public String getDelFlag()
     {
         return delFlag;
     }

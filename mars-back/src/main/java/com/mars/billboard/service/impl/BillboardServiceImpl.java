@@ -10,19 +10,19 @@ import com.mars.billboard.service.IBillboardService;
 
 /**
  * 公告管理Service业务层处理
- * 
+ *
  * @author zy
  * @date 2022-08-02
  */
 @Service
-public class BillboardServiceImpl implements IBillboardService 
+public class BillboardServiceImpl implements IBillboardService
 {
     @Autowired
     private BillboardMapper billboardMapper;
 
     /**
      * 查询公告管理
-     * 
+     *
      * @param billboardId 公告管理主键
      * @return 公告管理
      */
@@ -34,7 +34,7 @@ public class BillboardServiceImpl implements IBillboardService
 
     /**
      * 查询公告管理列表
-     * 
+     *
      * @param billboard 公告管理
      * @return 公告管理
      */
@@ -46,7 +46,7 @@ public class BillboardServiceImpl implements IBillboardService
 
     /**
      * 新增公告管理
-     * 
+     *
      * @param billboard 公告管理
      * @return 结果
      */
@@ -59,7 +59,7 @@ public class BillboardServiceImpl implements IBillboardService
 
     /**
      * 修改公告管理
-     * 
+     *
      * @param billboard 公告管理
      * @return 结果
      */
@@ -72,7 +72,7 @@ public class BillboardServiceImpl implements IBillboardService
 
     /**
      * 批量删除公告管理
-     * 
+     *
      * @param billboardIds 需要删除的公告管理主键
      * @return 结果
      */
@@ -84,7 +84,7 @@ public class BillboardServiceImpl implements IBillboardService
 
     /**
      * 删除公告管理信息
-     * 
+     *
      * @param billboardId 公告管理主键
      * @return 结果
      */
@@ -92,5 +92,29 @@ public class BillboardServiceImpl implements IBillboardService
     public int deleteBillboardByBillboardId(Long billboardId)
     {
         return billboardMapper.deleteBillboardByBillboardId(billboardId);
+    }
+
+    /**
+     * 逻辑批量删除公告管理
+     *
+     * @param billboardIds 需要删除的公告管理主键
+     * @return 结果
+     */
+    @Override
+    public int logicDeleteBillboardByBillboardIds(Long[] billboardIds)
+    {
+        return billboardMapper.logicDeleteBillboardByBillboardIds(billboardIds);
+    }
+
+    /**
+     * 逻辑删除公告管理信息
+     *
+     * @param billboardId 公告管理主键
+     * @return 结果
+     */
+    @Override
+    public int logicDeleteBillboardByBillboardId(Long billboardId)
+    {
+        return billboardMapper.logicDeleteBillboardByBillboardId(billboardId);
     }
 }

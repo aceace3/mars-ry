@@ -37,7 +37,7 @@ public class SentencesController extends BaseController
     /**
      * 查询句子列表
      */
-    @PreAuthorize("@ss.hasPermi('mars:sentences:list')")
+//    @PreAuthorize("@ss.hasPermi('mars:sentences:list')")
     @GetMapping("/list")
     public TableDataInfo list(Sentences sentences)
     {
@@ -62,7 +62,7 @@ public class SentencesController extends BaseController
     /**
      * 获取句子详细信息
      */
-    @PreAuthorize("@ss.hasPermi('mars:sentences:query')")
+//    @PreAuthorize("@ss.hasPermi('mars:sentences:query')")
     @GetMapping(value = "/{sentencesId}")
     public AjaxResult getInfo(@PathVariable("sentencesId") Long sentencesId)
     {
@@ -72,11 +72,18 @@ public class SentencesController extends BaseController
     /**
      * 新增句子
      */
-    @PreAuthorize("@ss.hasPermi('mars:sentences:add')")
+//    @PreAuthorize("@ss.hasPermi('mars:sentences:add')")
     @Log(title = "句子", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Sentences sentences)
     {
+        // 置顶则设置排序为0，反之亦然
+        if (sentences.getIsTop().equals('Y')){
+            sentences.setSort(0);
+        }
+        if (sentences.getSort() == 0){
+            sentences.setIsTop("Y");
+        }
         return toAjax(sentencesService.insertSentences(sentences));
     }
 
@@ -99,6 +106,15 @@ public class SentencesController extends BaseController
 	@DeleteMapping("/{sentencesIds}")
     public AjaxResult remove(@PathVariable Long[] sentencesIds)
     {
-        return toAjax(sentencesService.deleteSentencesBySentencesIds(sentencesIds));
+        return toAjax(sentencesService.logicDeleteSentencesBySentencesIds(sentencesIds));
+    }
+
+    /**
+     * 随机获取一句
+     */
+    @GetMapping("/randomQueryOne")
+    public AjaxResult randomQueryOne()
+    {
+        return AjaxResult.success(sentencesService.randomQueryOne());
     }
 }

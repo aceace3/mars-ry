@@ -5,15 +5,15 @@ import com.mars.billboard.domain.Billboard;
 
 /**
  * 公告管理Service接口
- * 
+ *
  * @author zy
  * @date 2022-08-02
  */
-public interface IBillboardService 
+public interface IBillboardService
 {
     /**
      * 查询公告管理
-     * 
+     *
      * @param billboardId 公告管理主键
      * @return 公告管理
      */
@@ -21,7 +21,7 @@ public interface IBillboardService
 
     /**
      * 查询公告管理列表
-     * 
+     *
      * @param billboard 公告管理
      * @return 公告管理集合
      */
@@ -29,7 +29,7 @@ public interface IBillboardService
 
     /**
      * 新增公告管理
-     * 
+     *
      * @param billboard 公告管理
      * @return 结果
      */
@@ -37,7 +37,7 @@ public interface IBillboardService
 
     /**
      * 修改公告管理
-     * 
+     *
      * @param billboard 公告管理
      * @return 结果
      */
@@ -45,7 +45,7 @@ public interface IBillboardService
 
     /**
      * 批量删除公告管理
-     * 
+     *
      * @param billboardIds 需要删除的公告管理主键集合
      * @return 结果
      */
@@ -53,9 +53,25 @@ public interface IBillboardService
 
     /**
      * 删除公告管理信息
-     * 
+     *
      * @param billboardId 公告管理主键
      * @return 结果
      */
     public int deleteBillboardByBillboardId(Long billboardId);
+
+    /**
+     * 逻辑批量删除公告管理
+     *
+     * @param billboardIds 需要删除的公告管理主键集合
+     * @return 结果
+     */
+    public int logicDeleteBillboardByBillboardIds(Long[] billboardIds);
+
+    /**
+     * 逻辑删除公告管理信息
+     *
+     * @param billboardId 公告管理主键
+     * @return 结果
+     */
+    public int logicDeleteBillboardByBillboardId(Long billboardId);
 }

@@ -88,6 +88,11 @@ export const constantRoutes = [
       }
     ]
   }
+  // ,
+  // {
+  //   path: '/mars/sentences',
+  //   component: () => import('@/views/mars/sentences/index'),
+  // }
 ]
 
 // 动态路由，基于用户权限动态去加载

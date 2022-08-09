@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mars.sentencescollection.mapper.SentencesCollectionMapper">
-    
+
     <resultMap type="SentencesCollection" id="SentencesCollectionResult">
         <result property="collectionId"    column="collection_id"    />
         <result property="sentencesId"    column="sentences_id"    />
@@ -22,18 +22,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectSentencesCollectionList" parameterType="SentencesCollection" resultMap="SentencesCollectionResult">
         <include refid="selectSentencesCollectionVo"/>
-        <where>  
+        <where>
+            del_flag = 'N'
             <if test="sentencesId != null "> and sentences_id = #{sentencesId}</if>
             <if test="userId != null "> and user_id = #{userId}</if>
             <if test="delFlag != null  and delFlag != ''"> and del_flag = #{delFlag}</if>
         </where>
     </select>
-    
+
     <select id="selectSentencesCollectionByCollectionId" parameterType="Long" resultMap="SentencesCollectionResult">
         <include refid="selectSentencesCollectionVo"/>
         where collection_id = #{collectionId}
     </select>
-        
+
     <insert id="insertSentencesCollection" parameterType="SentencesCollection" useGeneratedKeys="true" keyProperty="collectionId">
         insert into mars_sentences_collection
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -78,9 +79,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteSentencesCollectionByCollectionIds" parameterType="String">
-        delete from mars_sentences_collection where collection_id in 
+        delete from mars_sentences_collection where collection_id in
         <foreach item="collectionId" collection="array" open="(" separator="," close=")">
             #{collectionId}
         </foreach>
     </delete>
+
+    <update id="logicDeleteSentencesCollectionByCollectionId" parameterType="Long">
+        update mars_sentences_collection set del_flag = 'Y' where collection_id = #{collectionId}
+    </update>
+
+    <update id="logicDeleteSentencesCollectionByCollectionIds" parameterType="String">
+        update mars_sentences_collection set del_flag = 'Y' where collection_id in
+        <foreach item="collectionId" collection="array" open="(" separator="," close=")">
+            #{collectionId}
+        </foreach>
+    </update>
 </mapper>

@@ -23,7 +23,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 句子收藏管理Controller
- * 
+ *
  * @author zy
  * @date 2022-08-01
  */
@@ -99,6 +99,6 @@ public class SentencesCollectionController extends BaseController
 	@DeleteMapping("/{collectionIds}")
     public AjaxResult remove(@PathVariable Long[] collectionIds)
     {
-        return toAjax(sentencesCollectionService.deleteSentencesCollectionByCollectionIds(collectionIds));
+        return toAjax(sentencesCollectionService.logicDeleteSentencesCollectionByCollectionIds(collectionIds));
     }
 }

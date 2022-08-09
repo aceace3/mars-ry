@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mars.billboard.mapper.BillboardMapper">
-    
+
     <resultMap type="Billboard" id="BillboardResult">
         <result property="billboardId"    column="billboard_id"    />
         <result property="billboardTitle"    column="billboard_title"    />
@@ -24,19 +24,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectBillboardList" parameterType="Billboard" resultMap="BillboardResult">
         <include refid="selectBillboardVo"/>
-        <where>  
+        <where>
+            del_flag = 'N'
             <if test="billboardTitle != null  and billboardTitle != ''"> and billboard_title = #{billboardTitle}</if>
             <if test="billboardContent != null  and billboardContent != ''"> and billboard_content = #{billboardContent}</if>
             <if test="isTop != null  and isTop != ''"> and is_top = #{isTop}</if>
             <if test="sort != null "> and sort = #{sort}</if>
         </where>
     </select>
-    
+
     <select id="selectBillboardByBillboardId" parameterType="Long" resultMap="BillboardResult">
         <include refid="selectBillboardVo"/>
         where billboard_id = #{billboardId}
     </select>
-        
+
     <insert id="insertBillboard" parameterType="Billboard" useGeneratedKeys="true" keyProperty="billboardId">
         insert into mars_billboard
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -87,9 +88,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteBillboardByBillboardIds" parameterType="String">
-        delete from mars_billboard where billboard_id in 
+        delete from mars_billboard where billboard_id in
         <foreach item="billboardId" collection="array" open="(" separator="," close=")">
             #{billboardId}
         </foreach>
     </delete>
+
+    <update id="logicDeleteBillboardByBillboardId" parameterType="Long">
+        update mars_billboard set del_flag = 'Y' where billboard_id = #{billboardId}
+    </update>
+
+    <update id="logicDeleteBillboardByBillboardIds" parameterType="String">
+        update mars_billboard set del_flag = 'Y' where billboard_id in
+        <foreach item="billboardId" collection="array" open="(" separator="," close=")">
+            #{billboardId}
+        </foreach>
+    </update>
 </mapper>

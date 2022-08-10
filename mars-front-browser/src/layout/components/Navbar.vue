@@ -121,7 +121,9 @@ export default {
   height: 50px;
   overflow: hidden;
   position: relative;
-  background: #fff;
+  //background: #fff;
+  background: #C0C0C0;
+  border: 1px solid black;
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
 
   .hamburger-container {
@@ -189,7 +191,8 @@ export default {
           cursor: pointer;
           width: 40px;
           height: 40px;
-          border-radius: 10px;
+          border-radius: 0px;
+          border: 2px solid black;
         }
 
         .el-icon-caret-bottom {

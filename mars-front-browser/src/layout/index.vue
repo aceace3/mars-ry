@@ -5,6 +5,16 @@
         <navbar />
       </div>
       <app-main />
+      <el-footer style="  background: #C0C0C0;border: 1px solid black;">
+        <el-row>
+          <el-col :span="4">|</el-col>
+          <el-col :span="4">|</el-col>
+          <el-col :span="4">|</el-col>
+          <el-col :span="4">|</el-col>
+          <el-col :span="4">|</el-col>
+          <el-col :span="4" style="color: #5a5e66;line-height: 60px"><a target="_blank" href="https://beian.miit.gov.cn/">备案号：京ICP备20026972号-2</a></el-col>
+        </el-row>
+      </el-footer>
       <right-panel>
         <settings />
       </right-panel>

@@ -67,8 +67,11 @@ export default {
   margin-left: 8px;
 
   .no-redirect {
-    color: #97a8be;
+    color: #df6917;
     cursor: text;
+    font-size: 65px;
+    font-weight: 400;
+    text-shadow: 0 2px 7px #fff;
   }
 }
 </style>

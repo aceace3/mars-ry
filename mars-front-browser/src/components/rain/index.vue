@@ -1,5 +1,17 @@
 <template>
   <div class="rain">
+
+    <el-row>
+      <el-col :span="6">Author:Tate.Zhao<br>PV:0</el-col>
+      <el-col :span="12">
+        <div class="grid-content bg-purple-light">
+          <el-card shadow="always" style="margin-top: 150px;background-color: rgba(255,255,255,0.2);color: gold;">
+            总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>
+          </el-card>
+        </div>
+      </el-col>
+    </el-row>
+
     <div
       v-for="(item,index) in rainNumber"
       :key="index"
@@ -14,7 +26,6 @@
 
 <script>
 export default {
-  name: "rain-component",
   props: {
     rainNumber: {
       type: Number,
@@ -39,11 +50,11 @@ export default {
   methods: {
     randomRain() {
       let rainArr = this.$refs["rain-item"];
-      // console.log(rainArr);
+      console.log(rainArr);
       rainArr.forEach((item) => {
         // console.log(item.children);
-        item.style.top = Math.floor(Math.random() * 250 + 1) + "px";
-        item.style.left = Math.floor(Math.random() * 700 + 1) + "px";
+        item.style.top = Math.floor(Math.random() * 0 + 1) + "px";
+        item.style.left = Math.floor(Math.random() * 2000 + 1) + "px";
       });
     },
   },
@@ -52,21 +63,14 @@ export default {
 
 <style lang='less' scoped>
 .rain {
-  width: 700px;
-  height: 250px;
+  width: 100%;
+  height: 100vh;
   position: relative;
-  background: radial-gradient(
-    at 50% 0%,
-    rgba(6, 55, 111, 1) 0%,
-    rgba(11, 26, 57, 1) 70%
-  );
   .rain-item {
     position: absolute;
     width: 2px;
     height: 30px;
-    // background: skyblue;
     display: inline-block;
-    // overflow: hidden;
     .line {
       animation: raining 2s infinite linear;
       position: absolute;
@@ -75,21 +79,38 @@ export default {
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 183, 255, 0.7);
+      box-shadow: 0px 5px 20px 0px #fcfcfc;
+      background: linear-gradient(
+        to top,
+        rgb(249, 249, 249),
+        rgba(11, 36, 66, 0.1)
+      );
     }
   }
 }
 @keyframes raining {
   0% {
-    top: -30px;
+    top: -0;
     opacity: 0;
   }
+  10% {
+    top: 10;
+    opacity: 0.5;
+  }
+  25% {
+    top: 200;
+    opacity: 0.5;
+  }
   50% {
-    top: 0px;
+    top: 400px;
     opacity: 1;
   }
+  75% {
+    top: 600px;
+    opacity: 0.5;
+  }
   100% {
-    top: 30px;
+    top: 800px;
     opacity: 0;
   }
 }

@@ -1,6 +1,12 @@
+<!--<style>-->
+<!--body{-->
+<!--  background-image: url("../../bgimg.jpg");-->
+<!--  background-size: 100%;-->
+<!--}-->
+<!--</style>-->
+
 <template>
-  <div class="app-container">
-    123
+  <div class="app-container" >
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="来源" prop="source">
         <el-input

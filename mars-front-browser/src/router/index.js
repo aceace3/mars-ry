@@ -71,6 +71,10 @@ export const constantRoutes = [
         component: () => import('@/views/index'),
         name: 'Index',
         meta: { title: '首页', icon: 'dashboard', affix: true }
+      }  ,
+      {
+        path: '/mars/sentences',
+        component: () => import('@/views/mars/sentences/index'),
       }
     ]
   },
@@ -88,11 +92,7 @@ export const constantRoutes = [
       }
     ]
   }
-  // ,
-  // {
-  //   path: '/mars/sentences',
-  //   component: () => import('@/views/mars/sentences/index'),
-  // }
+
 ]
 
 // 动态路由，基于用户权限动态去加载

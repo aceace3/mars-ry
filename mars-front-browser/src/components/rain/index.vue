@@ -2,7 +2,12 @@
   <div class="rain">
 
     <el-row>
-      <el-col :span="6">Author:Tate.Zhao<br>PV:0</el-col>
+      <el-col :span="6" style="padding: 20px">
+        Author:Tate.Zhao<br>PV:0<br>
+        <el-card shadow="always" style="margin-top: 50px;background-color: rgba(255,255,255,0.2);color: gold;">
+          总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>
+        </el-card>
+      </el-col>
       <el-col :span="12">
         <div class="grid-content bg-purple-light">
           <el-card shadow="always" style="margin-top: 150px;background-color: rgba(255,255,255,0.2);color: gold;">

@@ -3,17 +3,38 @@
 
     <el-row>
       <el-col :span="6" style="padding: 20px">
-        Author:Tate.Zhao<br>PV:0<br>
-        <el-card shadow="always" style="margin-top: 50px;background-color: rgba(255,255,255,0.2);color: gold;">
+        <span style="color: white">Author:Tate.Zhao<br>PV:0<br></span>
+        <div class="billboardContainer">
           总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>
-        </el-card>
+        </div>
       </el-col>
       <el-col :span="12">
         <div class="grid-content bg-purple-light">
-          <el-card shadow="always" style="margin-top: 150px;background-color: rgba(255,255,255,0.2);color: gold;">
+          <el-card shadow="always" style="margin-top: 150px;background-color: rgba(255,255,255,0.2);color: gold;border: 1px solid #787be8">
             总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>
           </el-card>
+
+          <div>
+            <div class="flip-box">
+              <div :class="{'flip-front':playFlip}"
+                   class="flip-item flip-item-front"
+                   style="margin-top: 150px;background-color: rgba(255,255,255,0.2);color: gold;border: 1px solid #787be8">
+                <span>
+                    总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>
+                </span>
+              </div>
+              <div :class="{'flip-back':playFlip}"
+                   class="flip-item flip-item-back"
+                   style="margin-top: 150px;background-color: rgba(255,255,255,0.3);color: gold;border: 1px solid #787be8">
+                <span>反面</span>
+              </div>
+            </div>
+<!--            <button @click="play">点击翻转</button>-->
+          </div>
+
         </div>
+      </el-col>
+      <el-col :span="6">
       </el-col>
     </el-row>
 
@@ -28,6 +49,11 @@
     </div>
   </div>
 </template>
+
+<!--
+
+rain特效
+-->
 
 <script>
 export default {
@@ -118,5 +144,90 @@ export default {
     top: 800px;
     opacity: 0;
   }
+}
+</style>
+
+
+<!--
+公告css
+-->
+
+<style>
+.billboardContainer{
+  margin-top: 50px;
+  background-image: url('./bgimg2.png');
+  background-size: cover;
+  padding: 50px;
+  color: #efeef0;
+}
+</style>
+
+
+<!--
+下边是翻转卡片
+-->
+
+<!--<script>-->
+<!--export default {-->
+<!--  data() {-->
+<!--    return {-->
+<!--      playFlip: false,-->
+<!--    }-->
+<!--  },-->
+<!--  methods: {-->
+<!--    play() {-->
+<!--      this.playFlip = !this.playFlip-->
+<!--    }-->
+<!--  }-->
+<!--}-->
+<!--</script>-->
+
+<style scoped>
+.flip-box {
+  position: relative;
+  overflow: hidden;
+  height: 400px;
+  width: 100%;
+}
+
+.flip-item {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transition: all 1s ease-in-out 0s;
+  backface-visibility: hidden;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.flip-item-front {
+  z-index: 2;
+  /*background: red;*/
+  /*color: white;*/
+}
+
+.flip-item-back {
+  transform: rotateY(180deg);
+  z-index: 1;
+  background: green;
+  color: white;
+}
+
+.flip-box:hover .flip-item-front {
+  transform: rotateY(180deg);
+}
+
+.flip-box:hover .flip-item-back {
+  transform: rotateY(0deg);
+}
+
+.flip-front {
+  transform: rotateY(180deg);
+}
+
+.flip-back {
+  transform: rotateY(0deg);
 }
 </style>

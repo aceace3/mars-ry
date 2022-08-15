@@ -6,7 +6,11 @@
 
 <style>
 body{
-  background: rgb(0, 128, 128);
+  /*网站背景色*/
+  /*1.windows 2000 风格*/
+  /*background: rgb(0, 128, 128);*/
+  /*2.星空 风格*/
+  background-image: url("./bg-stars.jpg");
 }
 </style>
 

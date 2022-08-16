@@ -9,18 +9,15 @@
         </div>
       </el-col>
       <el-col :span="12">
-        <div class="grid-content bg-purple-light">
-          <el-card shadow="always" style="margin-top: 150px;background-color: rgba(255,255,255,0.2);color: gold;border: 1px solid #787be8">
-            总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>
-          </el-card>
-
           <div>
             <div class="flip-box">
               <div :class="{'flip-front':playFlip}"
                    class="flip-item flip-item-front"
                    style="margin-top: 150px;background-color: rgba(255,255,255,0.2);color: gold;border: 1px solid #787be8">
                 <span>
-                    总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>
+<!--                    {{sentences.contentHtml}}总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>-->
+<!--                    {{sentences.contentHtml}}总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>-->
+                  <div v-html="sentences.contentHtml"></div>
                 </span>
               </div>
               <div :class="{'flip-back':playFlip}"
@@ -31,8 +28,6 @@
             </div>
 <!--            <button @click="play">点击翻转</button>-->
           </div>
-
-        </div>
       </el-col>
       <el-col :span="6">
       </el-col>
@@ -56,7 +51,15 @@ rain特效
 -->
 
 <script>
+import { randomQueryOne } from "@/api/mars/sentences";
+
 export default {
+  data(){
+    return {
+      playFlip: false,
+      sentences:{},
+    }
+  },
   props: {
     rainNumber: {
       type: Number,
@@ -79,15 +82,28 @@ export default {
     this.randomRain();
   },
   methods: {
+    play() {
+      this.playFlip = !this.playFlip
+    },
+    randomQueryOne() {
+      randomQueryOne().then(response => {
+        console.log("res:"+JSON.stringify(response))
+        console.log("res.code:"+response.code)
+        this.sentences = response.data;
+      })
+    },
     randomRain() {
       let rainArr = this.$refs["rain-item"];
-      console.log(rainArr);
       rainArr.forEach((item) => {
         // console.log(item.children);
         item.style.top = Math.floor(Math.random() * 0 + 1) + "px";
         item.style.left = Math.floor(Math.random() * 2000 + 1) + "px";
       });
     },
+
+  },
+  created() {
+    this.randomQueryOne();
   },
 };
 </script>
@@ -167,25 +183,10 @@ export default {
 下边是翻转卡片
 -->
 
-<!--<script>-->
-<!--export default {-->
-<!--  data() {-->
-<!--    return {-->
-<!--      playFlip: false,-->
-<!--    }-->
-<!--  },-->
-<!--  methods: {-->
-<!--    play() {-->
-<!--      this.playFlip = !this.playFlip-->
-<!--    }-->
-<!--  }-->
-<!--}-->
-<!--</script>-->
-
 <style scoped>
 .flip-box {
   position: relative;
-  overflow: hidden;
+  /*overflow: hidden;*/
   height: 400px;
   width: 100%;
 }
@@ -206,13 +207,15 @@ export default {
   z-index: 2;
   /*background: red;*/
   /*color: white;*/
+  min-height: 300px;
 }
 
 .flip-item-back {
   transform: rotateY(180deg);
   z-index: 1;
-  background: green;
-  color: white;
+  /*background: green;*/
+  /*color: white;*/
+  min-height: 300px;
 }
 
 .flip-box:hover .flip-item-front {

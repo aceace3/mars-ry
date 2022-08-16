@@ -1,5 +1,6 @@
 package com.mars.sentences.controller;
 
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -115,6 +116,7 @@ public class SentencesController extends BaseController
     @GetMapping("/randomQueryOne")
     public AjaxResult randomQueryOne()
     {
-        return AjaxResult.success(sentencesService.randomQueryOne());
+        Sentences sentences = sentencesService.randomQueryOne();
+        return AjaxResult.success(sentences);
     }
 }

@@ -42,3 +42,11 @@ export function delSentences(sentencesId) {
     method: 'delete'
   })
 }
+
+export function randomQueryOne() {
+  return request({
+    url: '/mars/sentences/randomQueryOne',
+    method: 'get',
+    // params: query
+  })
+}

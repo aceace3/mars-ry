@@ -1,221 +1,107 @@
-<!--<style>-->
-<!--body{-->
-<!--  background-image: url("../../bgimg.jpg");-->
-<!--  background-size: 100%;-->
-<!--}-->
-<!--</style>-->
+<style>
+body{
+  background-image: url("../../bg-stars.jpg");
+  background-size: 100%;
+}
+</style>
 
 <template>
-  <div class="app-container" >
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="来源" prop="source">
-        <el-input
-          v-model="queryParams.source"
-          placeholder="请输入来源"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="置顶" prop="isTop">
-        <el-input
-          v-model="queryParams.isTop"
-          placeholder="请输入置顶"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="用户id" prop="userId">
-        <el-input
-          v-model="queryParams.userId"
-          placeholder="请输入用户id"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="投稿者" prop="author">
-        <el-input
-          v-model="queryParams.author"
-          placeholder="请输入投稿者"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="投稿者email" prop="authorEmail">
-        <el-input
-          v-model="queryParams.authorEmail"
-          placeholder="请输入投稿者email"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="允许展示email" prop="permitShowEmail">
-        <el-input
-          v-model="queryParams.permitShowEmail"
-          placeholder="请输入允许展示email"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="排序" prop="sort">
-        <el-input
-          v-model="queryParams.sort"
-          placeholder="请输入排序"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="删除标记" prop="delFlag">
-        <el-input
-          v-model="queryParams.delFlag"
-          placeholder="请输入删除标记"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-      </el-form-item>
-    </el-form>
-
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['mars:sentences:add']"
-        >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['mars:sentences:edit']"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['mars:sentences:remove']"
-        >删除</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['mars:sentences:export']"
-        >导出</el-button>
-      </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>
-
-    <el-table v-loading="loading" :data="sentencesList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="句子id" align="center" prop="sentencesId" />
-      <el-table-column label="句子内容text" align="center" prop="contentText" />
-      <el-table-column label="句子内容html" align="center" prop="contentHtml" />
-      <el-table-column label="来源" align="center" prop="source" />
-      <el-table-column label="置顶" align="center" prop="isTop" />
-      <el-table-column label="用户id" align="center" prop="userId" />
-      <el-table-column label="投稿者" align="center" prop="author" />
-      <el-table-column label="投稿者email" align="center" prop="authorEmail" />
-      <el-table-column label="投稿者的话" align="center" prop="authorTalk" />
-      <el-table-column label="1-已发布/2-审核中" align="center" prop="type" />
-      <el-table-column label="允许展示email" align="center" prop="permitShowEmail" />
-      <el-table-column label="排序" align="center" prop="sort" />
-      <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['mars:sentences:edit']"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['mars:sentences:remove']"
-          >删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
-
-    <!-- 添加或修改句子对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="句子内容text" prop="contentText">
-          <el-input v-model="form.contentText" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="句子内容html" prop="contentHtml">
-          <el-input v-model="form.contentHtml" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <b>句子内容：</b><br>
-        <editor v-model="form.contentHtml" :min-height="192" :uploadUrl="uploadUrl" style="margin-bottom: 20px;margin-top: 5px"/>
+  <div class="app-container">
+    <div style="width: 1400px;background: rgba(255,255,255,0.7);padding: 30px;margin: 0 auto" >
+      <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
         <el-form-item label="来源" prop="source">
-          <el-input v-model="form.source" placeholder="请输入来源" />
+          <el-input
+            v-model="queryParams.source"
+            placeholder="请输入来源"
+            clearable
+            @keyup.enter.native="handleQuery"
+          />
         </el-form-item>
-        <el-form-item label="置顶" prop="isTop">
-          <el-input v-model="form.isTop" placeholder="请输入置顶" />
-        </el-form-item>
-        <el-form-item label="用户id" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入用户id" />
-        </el-form-item>
-        <el-form-item label="投稿者" prop="author">
-          <el-input v-model="form.author" placeholder="请输入投稿者" />
-        </el-form-item>
-        <el-form-item label="投稿者email" prop="authorEmail">
-          <el-input v-model="form.authorEmail" placeholder="请输入投稿者email" />
-        </el-form-item>
-        <el-form-item label="投稿者的话" prop="authorTalk">
-          <el-input v-model="form.authorTalk" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="允许展示email" prop="permitShowEmail">
-          <el-input v-model="form.permitShowEmail" placeholder="请输入允许展示email" />
-        </el-form-item>
-        <el-form-item label="排序" prop="sort">
-          <el-input v-model="form.sort" placeholder="请输入排序" />
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="删除标记" prop="delFlag">
-          <el-input v-model="form.delFlag" placeholder="请输入删除标记" />
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
-      </div>
-    </el-dialog>
+
+      <el-table v-loading="loading" :data="sentencesList" @selection-change="handleSelectionChange">
+        <el-table-column label="句子内容text" align="center" prop="contentText" />
+        <el-table-column label="句子内容html" align="center" prop="contentHtml" />
+        <el-table-column label="来源" align="center" prop="source" />
+        <el-table-column label="置顶" align="center" prop="isTop" />
+        <el-table-column label="用户id" align="center" prop="userId" />
+        <el-table-column label="投稿者" align="center" prop="author" />
+        <el-table-column label="投稿者email" align="center" prop="authorEmail" />
+        <el-table-column label="投稿者的话" align="center" prop="authorTalk" />
+        <el-table-column label="1-已发布/2-审核中" align="center" prop="type" />
+        <el-table-column label="允许展示email" align="center" prop="permitShowEmail" />
+        <el-table-column label="排序" align="center" prop="sort" />
+        <el-table-column label="备注" align="center" prop="remark" />
+      </el-table>
+
+      <pagination
+        v-show="total>0"
+        :total="total"
+        :page.sync="queryParams.pageNum"
+        :limit.sync="queryParams.pageSize"
+        @pagination="getList"
+      />
+
+      <!-- 添加或修改句子对话框 -->
+      <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+        <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+          <el-form-item label="句子内容text" prop="contentText">
+            <el-input v-model="form.contentText" type="textarea" placeholder="请输入内容" />
+          </el-form-item>
+          <el-form-item label="句子内容html" prop="contentHtml">
+            <el-input v-model="form.contentHtml" type="textarea" placeholder="请输入内容" />
+          </el-form-item>
+          <b>句子内容：</b><br>
+          <editor v-model="form.contentHtml" :min-height="192" :uploadUrl="uploadUrl" style="margin-bottom: 20px;margin-top: 5px"/>
+          <el-form-item label="来源" prop="source">
+            <el-input v-model="form.source" placeholder="请输入来源" />
+          </el-form-item>
+          <el-form-item label="置顶" prop="isTop">
+            <el-input v-model="form.isTop" placeholder="请输入置顶" />
+          </el-form-item>
+          <el-form-item label="用户id" prop="userId">
+            <el-input v-model="form.userId" placeholder="请输入用户id" />
+          </el-form-item>
+          <el-form-item label="投稿者" prop="author">
+            <el-input v-model="form.author" placeholder="请输入投稿者" />
+          </el-form-item>
+          <el-form-item label="投稿者email" prop="authorEmail">
+            <el-input v-model="form.authorEmail" placeholder="请输入投稿者email" />
+          </el-form-item>
+          <el-form-item label="投稿者的话" prop="authorTalk">
+            <el-input v-model="form.authorTalk" type="textarea" placeholder="请输入内容" />
+          </el-form-item>
+          <el-form-item label="允许展示email" prop="permitShowEmail">
+            <el-input v-model="form.permitShowEmail" placeholder="请输入允许展示email" />
+          </el-form-item>
+          <el-form-item label="排序" prop="sort">
+            <el-input v-model="form.sort" placeholder="请输入排序" />
+          </el-form-item>
+          <el-form-item label="备注" prop="remark">
+            <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+          </el-form-item>
+          <el-form-item label="删除标记" prop="delFlag">
+            <el-input v-model="form.delFlag" placeholder="请输入删除标记" />
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="submitForm">确 定</el-button>
+          <el-button @click="cancel">取 消</el-button>
+        </div>
+      </el-dialog>
+    </div>
   </div>
 </template>
+
+<style>
+.pagination-container[data-v-72233bcd] {
+  background: none;
+}
+</style>
 
 <script>
 import { listSentences, getSentences, delSentences, addSentences, updateSentences } from "@/api/mars/sentences";
@@ -387,3 +273,4 @@ export default {
   }
 };
 </script>
+

@@ -25,7 +25,7 @@ export default {
 <style lang="scss" scoped>
 .app-main {
   /* 110px = navbar:50px + footer:60px */
-  height: calc(100vh - 110px);
+  min-height: calc(100vh - 110px);
   width: 100%;
   position: relative;
   overflow: hidden;

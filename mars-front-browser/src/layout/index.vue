@@ -5,7 +5,7 @@
         <navbar />
       </div>
       <app-main />
-      <el-footer style="  background: #C0C0C0;border: 1px solid black;">
+      <el-footer style="  background: linear-gradient(#23c6c8, #f1fa8c, #f56c6c);border: 1px solid black;">
         <el-row>
           <el-col :span="4">|</el-col>
           <el-col :span="4">|</el-col>

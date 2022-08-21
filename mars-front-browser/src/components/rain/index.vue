@@ -6,28 +6,49 @@
         <span style="color: white">Author:Tate.Zhao<br>PV:0<br></span>
         <div class="billboardContainer">
           总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>
+          总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>
         </div>
       </el-col>
       <el-col :span="12">
-          <div>
-            <div class="flip-box">
-              <div :class="{'flip-front':playFlip}"
-                   class="flip-item flip-item-front"
-                   style="margin-top: 150px;background-color: rgba(255,255,255,0.2);color: gold;border: 1px solid #787be8">
-                <span>
-<!--                    {{sentences.contentHtml}}总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>-->
-<!--                    {{sentences.contentHtml}}总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>总是显示<br>-->
-                  <div v-html="sentences.contentHtml"></div>
-                </span>
-              </div>
-              <div :class="{'flip-back':playFlip}"
-                   class="flip-item flip-item-back"
-                   style="margin-top: 150px;background-color: rgba(255,255,255,0.3);color: gold;border: 1px solid #787be8">
-                <span>反面</span>
-              </div>
-            </div>
-<!--            <button @click="play">点击翻转</button>-->
-          </div>
+        <div>
+          <ul style="margin-top: 150px;">
+            <li class="flip-container  " ontouchstart="this.classList.toggle('hover');" style="background-color: rgba(0,0,0,0.3)">
+              <a class="flipper">
+                <div class="front " style="outline:1px solid transparent;background-color: rgba(255,255,255,0.1);color: gold;border: 1px solid #787be8">
+                  <div style="border-bottom: 1px dashed gray;background-color: rgba(0,0,0,0.3);color: #008489;">
+                    <marquee>公益提示：吸烟有害健康，尽早戒烟有益健康</marquee>
+                  </div>
+                  <span>
+                    <div v-html="sentences.contentHtml" style="margin: 70px 200px"></div>
+                    <div style="float: right;margin-right: 200px;margin-bottom: 70px">—— —— <span v-text="sentences.source"></span></div>
+                  </span>
+                </div>
+                <div class="back " style="outline:1px solid transparent;background-color: rgba(255,255,255,0.2);color: silver;border: 1px solid #787be8">
+                  <div style="margin: 70px 200px">
+                    <table class="author-tb">
+                      <tr>
+                        <td><b>投稿者：</b></td>
+                        <td><span v-text="sentences.author"></span></td>
+                      </tr>
+                      <tr>
+                        <td><b>投稿者Email：</b></td>
+                        <td><span v-text="sentences.email"></span></td>
+                      </tr>
+                      <tr>
+                        <td><b>投稿时间：</b></td>
+                        <td><span v-text="sentences.createTime"></span></td>
+                      </tr>
+                      <tr>
+                        <td><b>投稿者的话：</b></td>
+                        <td><span v-text="sentences.authorTalk"></span></td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
       </el-col>
       <el-col :span="6">
       </el-col>
@@ -46,10 +67,8 @@
 </template>
 
 <!--
-
 rain特效
 -->
-
 <script>
 import { randomQueryOne } from "@/api/mars/sentences";
 
@@ -87,8 +106,8 @@ export default {
     },
     randomQueryOne() {
       randomQueryOne().then(response => {
-        console.log("res:"+JSON.stringify(response))
-        console.log("res.code:"+response.code)
+        // console.log("res:"+JSON.stringify(response))
+        // console.log("res.code:"+response.code)
         this.sentences = response.data;
       })
     },
@@ -107,11 +126,10 @@ export default {
   },
 };
 </script>
-
 <style lang='less' scoped>
 .rain {
   width: 100%;
-  height: 100vh;
+  height: cacl(100vh-110px);
   position: relative;
   .rain-item {
     position: absolute;
@@ -167,12 +185,11 @@ export default {
 <!--
 公告css
 -->
-
 <style>
 .billboardContainer{
   margin-top: 50px;
-  background-image: url('./bgimg2.png');
-  background-size: cover;
+  background-image: url('./bgimg3.png');
+  background-size: 100%;
   padding: 50px;
   color: #efeef0;
 }
@@ -182,55 +199,91 @@ export default {
 <!--
 下边是翻转卡片
 -->
+<style>
+ul,li{ list-style:none; margin:0; padding:0;}
 
-<style scoped>
-.flip-box {
-  position: relative;
-  /*overflow: hidden;*/
-  height: 400px;
-  width: 100%;
+.brandsShow{ width:1200px; height:620px; margin:0 auto;  }
+.brandsShow ul{ margin-left:-20px; width:1225px; height:auto;  }
+.brandsShow ul li{ float:left; display:inline; width:283px; height:424px;  }
+
+.flip-container {perspective: 1000;
+  -webkit-perspective: 1000px;    /*父类容器中  perspective  子类允许透视*/
+  -moz-perspective: 1000px;
+  -ms-perspective: 1000px;
+  -o-perspective: 1000px;
+  perspective: 1000px;
+  margin:0px auto;
+  float:left; margin-left:20px; margin-bottom:20px; border:1px solid #333;
 }
 
-.flip-item {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  transition: all 1s ease-in-out 0s;
+
+.flip-container, .front, .back {width: 100%;min-height: 424px;border-radius: 5px}
+
+.front, .back {
   backface-visibility: hidden;
-  box-sizing: border-box;
-  border-radius: 5px;
+  overflow:hidden;
+  -webkit-transition: .8s ease-out;
+  transition: .8s ease-out;
+  -webkit-transform-style: preserve-3d;  /* 子类保留3d动画结果*/
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  position: absolute;top: 0;left: 0; /*动画元素最好绝对位置*/
 }
 
-.flip-item-front {
-  z-index: 2;
-  /*background: red;*/
-  /*color: white;*/
-  min-height: 300px;
-}
 
-.flip-item-back {
-  transform: rotateY(180deg);
-  z-index: 1;
-  /*background: green;*/
-  /*color: white;*/
-  min-height: 300px;
-}
-
-.flip-box:hover .flip-item-front {
-  transform: rotateY(180deg);
-}
-
-.flip-box:hover .flip-item-back {
+.front {z-index: 2; /*起始设置层  hover时候改变*/
+  -webkit-transform: rotateY(0deg);
+  -moz-transform: rotateY(0deg);
+  -ms-transform:  rotateY(0deg);
+  -o-transform:  rotateY(0deg);
   transform: rotateY(0deg);
 }
 
-.flip-front {
-  transform: rotateY(180deg);
+.back { z-index:1;/*起始设置层  hover时候改变*/
+  -webkit-transform: rotateY(-180deg);
+  -moz-transform: rotateY(-180deg);
+  -ms-transform:  rotateY(-180deg);
+  -o-transform:  rotateY(-180deg);
+  transform: rotateY(-180deg);
 }
 
-.flip-back {
-  transform: rotateY(0deg);
+
+
+.flipper {
+  -webkit-transition: transform .8s ease-in-out;
+  -moz-transition: transform .8s ease-in-out;
+  -ms-transition: transform .5s ease-in-out;
+  -o-transition: transform .5s ease-in-out;
+  transition: transform .5s ease-in-out;
+
+  -webkit-transform-style: preserve-3d;  /*使其子类变换后得以保留 3d转换后的位置*/
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  display:block;position: relative;
 }
+
+
+.flip-container:hover .back {
+  -webkit-transform: rotateY(0deg);
+  -moz-transform:  rotateY(0deg);
+  -ms-transform:  rotateY(0deg);
+  -o-transform:  rotateY(0deg);
+  transform: rotateY(0deg);
+  z-index:2;
+}
+
+.flip-container:hover .front {
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -ms-transform:  rotateY(180deg);
+  -o-transform:  rotateY(180deg);
+  transform: rotateY(180deg);
+  z-index:10;
+}
+
+
 </style>
